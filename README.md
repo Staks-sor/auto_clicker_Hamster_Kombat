@@ -1,0 +1,1 @@
+# auto_clicker_Hamster_Kombat
