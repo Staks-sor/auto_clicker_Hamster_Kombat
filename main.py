@@ -57,7 +57,7 @@ class NoxController:
                 pyautogui.moveTo(center_x, center_y)
                 pyautogui.click()
                 await asyncio.sleep(0.01)
-                if time.time() - self.start_time > 200:  # Run for 5 minutes
+                if time.time() - self.start_time > random.randint(100, 300):  # Run for 5 minutes
                     os.system("taskkill /im Nox.exe")  # Kill the Nox process
                     break
         except Exception as e:
