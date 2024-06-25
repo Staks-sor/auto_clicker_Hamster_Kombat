@@ -3,11 +3,11 @@ import random
 import time
 import pyautogui
 import keyboard
-import schedule
 import asyncio
 import logging
+import psutil
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
 class NoxController:
@@ -21,7 +21,21 @@ class NoxController:
         try:
             os.startfile(self.program_path)
             logging.info('Nox started')
-            await asyncio.sleep(30)
+
+            # Wait for the process to start
+            while True:
+                for proc in psutil.process_iter(['pid', 'name']):
+                    if proc.info['name'] == 'Nox.exe':
+                        logging.info('Nox process found')
+                        break
+                else:
+                    await asyncio.sleep(1)
+                    continue
+                break
+
+            # Process is running, proceed with the code
+            # Replace the sleep with your actual code
+            await asyncio.sleep(12)
         except Exception as e:
             logging.error(f'Error starting program: {e}')
 
@@ -58,6 +72,7 @@ class NoxController:
                 pyautogui.click()
                 await asyncio.sleep(0.01)
                 if time.time() - self.start_time > random.randint(100, 300):  # Run for 5 minutes
+                    logging.info(f"Terminating Nox process after {time.time() - self.start_time:.2f} seconds.")
                     os.system("taskkill /im Nox.exe")  # Kill the Nox process
                     break
         except Exception as e:
