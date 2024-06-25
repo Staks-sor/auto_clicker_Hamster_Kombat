@@ -1,4 +1,5 @@
 import os
+import random
 import time
 import pyautogui
 import keyboard
@@ -102,7 +103,7 @@ async def run_nox_controller():
 async def schedule_countdown():
     try:
         while True:
-            countdown_time = 3610  # 1h10s minutes in seconds
+            countdown_time = random.randint(1800, 5400)
             await countdown(countdown_time)
             await run_nox_controller()
     except Exception as e:
