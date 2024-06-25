@@ -56,7 +56,7 @@ class NoxController:
                 pyautogui.moveTo(center_x, center_y)
                 pyautogui.click()
                 await asyncio.sleep(0.01)
-                if time.time() - self.start_time > 300:  # Run for 5 minutes
+                if time.time() - self.start_time > 200:  # Run for 5 minutes
                     os.system("taskkill /im Nox.exe")  # Kill the Nox process
                     break
         except Exception as e:
@@ -102,7 +102,7 @@ async def run_nox_controller():
 async def schedule_countdown():
     try:
         while True:
-            countdown_time = 200  # 10 minutes in seconds
+            countdown_time = 3610  # 1h10s minutes in seconds
             await countdown(countdown_time)
             await run_nox_controller()
     except Exception as e:
