@@ -101,11 +101,10 @@ async def run_nox_controller():
 
 async def schedule_countdown():
     try:
-        countdown_time = 600  # 10 minutes in seconds
-        await countdown(countdown_time)
-        await run_nox_controller()
-        schedule.clear('nox-controller')  # Clear the schedule
-        schedule.every(10).minutes.do(schedule_countdown)  # Reschedule
+        while True:
+            countdown_time = 200  # 10 minutes in seconds
+            await countdown(countdown_time)
+            await run_nox_controller()
     except Exception as e:
         logging.error(f'Error in schedule countdown: {e}')
 
@@ -119,7 +118,3 @@ if __name__ == '__main__':
 
     # Schedule the countdown
     asyncio.run(schedule_countdown())
-
-    while True:
-        schedule.run_pending()
-        asyncio.run(asyncio.sleep(1))
