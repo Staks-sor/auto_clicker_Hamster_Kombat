@@ -110,15 +110,16 @@ async def schedule_countdown():
         logging.error(f'Error in schedule countdown: {e}')
 
 
-# First run
-nox_controller.start_time = time.time()
-asyncio.run(nox_controller.run_in_background())
-nox_controller.run_count += 1
-logging.info(f'Nox controller has been run {nox_controller.run_count} times.')
+if __name__ == '__main__':
+    # First run
+    nox_controller.start_time = time.time()
+    asyncio.run(nox_controller.run_in_background())
+    nox_controller.run_count += 1
+    logging.info(f'Nox controller has been run {nox_controller.run_count} times.')
 
-# Schedule the countdown
-asyncio.run(schedule_countdown())
+    # Schedule the countdown
+    asyncio.run(schedule_countdown())
 
-while True:
-    schedule.run_pending()
-    asyncio.run(asyncio.sleep(1))
+    while True:
+        schedule.run_pending()
+        asyncio.run(asyncio.sleep(1))
