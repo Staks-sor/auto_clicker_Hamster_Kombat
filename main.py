@@ -96,9 +96,12 @@ nox_controller.add_coordinate(832, 817, 178, 9)
 
 async def countdown(countdown_time):
     try:
+        last_logged_minute = -1
         while countdown_time > 0:
             minutes, seconds = divmod(countdown_time, 60)
-            logging.info(f'Time until next run: {int(minutes)} minutes, {int(seconds)} seconds')
+            if minutes != last_logged_minute:
+                logging.info(f'Time until next run: {int(minutes)} minutes, {int(seconds)} seconds')
+                last_logged_minute = minutes
             await asyncio.sleep(1)
             countdown_time -= 1
     except Exception as e:
